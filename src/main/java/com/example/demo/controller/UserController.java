@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,19 +10,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserRepository repo;
 
-    public UserController(UserRepository repo) {
-        this.repo = repo;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
-    @GetMapping
-    public List<User> getAll() {
-        return repo.findAll();
-    }
-
+    // CREATE (POST)
     @PostMapping
-    public User create(@RequestBody User user) {
-        return repo.save(user);
+    public User createUser(@RequestBody User user) {
+        return userRepository.save(user);
+    }
+
+    // READ ALL (GET)
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    // READ ONE (GET by id)
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userRepository.findById(id).orElseThrow();
+    }
+
+    // UPDATE (PUT)
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setName(userDetails.getName());
+        user.setEmail(userDetails.getEmail());
+        return userRepository.save(user);
+    }
+
+    // DELETE (DELETE)
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
     }
 }
