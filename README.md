@@ -1,2 +1,2 @@
-cmd - mvn clean spring-boot:run
+cmd - mvn clean spring-boot:run;
 where pom.xml is
