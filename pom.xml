@@ -48,7 +48,11 @@
             <version>11.2.3.jre17</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.5.0</version>
+        </dependency>
 
         <!-- Swagger/OpenAPI -->
         <dependency>
